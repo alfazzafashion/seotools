@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+  - 2.0.0-p353
+env:
+  - DB=postgresql
+script:
+  - bundle exec rake db:setup
+  - bundle exec rake db:test:prepare
+  - bundle exec rake test
+  - bundle exec rspec spec
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - RAILS_ENV=test bundle exec rake db:create
+bundler_args: --binstubs=./bundler_stubs
